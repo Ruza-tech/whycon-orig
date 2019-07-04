@@ -6,6 +6,7 @@
 #include "CGui.h"
 #include "CTimer.h"
 #include "CCircleDetect.h"
+#include "CSegmentation.h"
 #include "CPosition.h"
 #include "CTransformation.h"
 #include <SDL/SDL.h>
@@ -33,7 +34,7 @@ int  screenHeight = 1080;
 int numBots = 0;		//num of robots to track
 int numFound = 0;		//num of robots detected in the last step
 int numStatic = 0;		//num of non-moving robots  
-CCircleDetect *detectorArray[MAX_PATTERNS];	//detector array (each pattern has its own detector)
+CSegmentation *detectorArray[MAX_PATTERNS];	//detector array (each pattern has its own detector)
 SSegment currentSegmentArray[MAX_PATTERNS];	//segment array (detected objects in image space)
 SSegment lastSegmentArray[MAX_PATTERNS];	//segment position in the last step (allows for tracking)
 STrackedObject objectArray[MAX_PATTERNS];	//object array (detected objects in metric space)
@@ -308,7 +309,7 @@ int main(int argc,char* argv[])
 	trans->transformType = TRANSFORM_NONE;		//in our case, 2D is the default
 
 	//initialize the circle detectors - each circle has its own detector instance 
-	for (int i = 0;i<MAX_PATTERNS;i++) detectorArray[i] = new CCircleDetect(imageWidth,imageHeight,i);
+	for (int i = 0;i<MAX_PATTERNS;i++) detectorArray[i] = new CSegmentation(imageWidth,imageHeight,i);
 	image->getSaveNumber();
 
 	//setup timers to assess system performance
